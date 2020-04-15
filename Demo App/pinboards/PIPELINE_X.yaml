@@ -1,0 +1,1148 @@
+name: PIPELINE X
+pinned_answer:
+- answer:
+    name: CQ Forecast
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Amount] [Opportunity Forecast Category] = ''booked'' ''commit'' ''most likely'' [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'''
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Total Opportunity Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Opportunity Amount
+        config:
+          aggr:
+          - SUM
+  visualization_type: HEADLINE
+  column_name: Total Opportunity Amount
+- answer:
+    name: CQ Booked
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Booked Amount] [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Booked Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Booked Amount
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: HEADLINE
+  column_name: Booked Amount
+- answer:
+    name: CQ Booked Expansion
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Booked Amount] [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'' [Opportunity Type] = ''existing customer expansion'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Booked Amount
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Booked Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: HEADLINE
+  column_name: Booked Amount
+- answer:
+    name: CQ New Logos
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Booked Amount] [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'' [Opportunity Type] = ''new customer'' [Number of Opportunities] [Opportunity Stage Status] = ''booked'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Booked Amount
+          - Total Number of Opportunities
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Booked Amount
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: HEADLINE
+  column_name: Total Number of Opportunities
+- answer:
+    name: CQ Forecast Category
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Amount] [Opportunity Forecast Category] [Opportunity Forecast Category] = ''booked'' ''commit'' ''most likely'' [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'''
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Forecast Category
+          - Quarter(Opportunity Close Date,fiscal)
+          - Total Opportunity Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Forecast Category
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Opportunity Amount
+        config:
+          aggr:
+          - SUM
+  visualization_type: CHART
+- answer:
+    name: M1 Open Pipeline Quarterly
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Amount] [Opportunity Stage] = ''m1 new business meeting'' ''s1 business exposure'' ''s3 alignment with eb'' ''s2 scoping success'' ''s4 validation'' ''s5 negotiate'' [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'' ''next 3 quarters'' [Opportunity Stage]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Opportunity Amount
+        config:
+          aggr:
+          - SUM
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Stage
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Opportunity Stage
+          - Total Opportunity Amount
+  visualization_type: CHART
+- answer:
+    name: S1 Expansion Open Pipeline Quarterly
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Amount] [Opportunity Stage] = ''s1 business exposure'' ''s3 alignment with eb'' ''s2 scoping success'' ''s4 validation'' ''s5 negotiate'' [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'' ''next 3 quarters'' [Opportunity Stage] [Opportunity Type] = ''existing customer expansion'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Opportunity Amount
+        config:
+          aggr:
+          - SUM
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Opportunity Stage
+          - Total Opportunity Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Stage
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: S1 Diamond vs Gold Pipe Quarterly
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Amount] [Opportunity Stage] = ''s1 business exposure'' ''s3 alignment with eb'' ''s2 scoping success'' ''s4 validation'' ''s5 negotiate'' [Opportunity Close Date] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''this quarter'' ''next 3 quarters'' [Opportunity Stage] [Account Revenue Tier]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Account Revenue Tier
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Opportunity Stage
+          - Account Revenue Tier
+          - Total Opportunity Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Opportunity Amount
+        config:
+          aggr:
+          - SUM
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Stage
+        config:
+          aggr:
+          - COUNT_DISTINCT
+  visualization_type: CHART
+- answer:
+    name: CQ Open Pipe by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Open Pipeline] [Opportunity Close Date] = ''this quarter'' [Opportunity Region] sort by [Open Pipeline] descending [Opportunity Type] [Open Pipeline] > 0 [Open Pipeline Deals]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Type
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Region
+          - Opportunity Type
+          - Open Pipeline
+          - Total Open Pipeline Deals
+    - viz_type: HEADLINE
+      headline:
+        column_name: Open Pipeline
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Open Pipeline Deals
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+  visualization_type: CHART
+- answer:
+    name: NQ Open Pipe by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Open Pipeline] [Opportunity Close Date] = ''next quarter'' [Opportunity Region] sort by [Open Pipeline] descending [Opportunity Type] [Open Pipeline] > 0 [Open Pipeline Deals]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Type
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Open Pipeline Deals
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Open Pipeline
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Region
+          - Opportunity Type
+          - Open Pipeline
+          - Total Open Pipeline Deals
+  visualization_type: CHART
+- answer:
+    name: All Booked Deals & ASP
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    formulas:
+    - name: ASP
+      expr: '[Sales_Demo_1::Booked Amount]/ count( [Sales_Demo_1::Opportunity ID]) '
+    query_text: '[Opportunity Stage Status] = ''booked'' [Number of Opportunities] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''last 8 quarters'' ''this quarter'' [Opportunity Type] = ''new customer'' ''existing customer expansion'' [ASP]'
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Total Number of Opportunities
+          - ASP
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: ASP
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: New Customer Booked Deals & ASP
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    formulas:
+    - name: ASP
+      expr: '[Sales_Demo_1::Booked Amount]/ count( [Sales_Demo_1::Opportunity ID]) '
+    query_text: '[Opportunity Stage Status] = ''booked'' [Number of Opportunities] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''last 8 quarters'' ''this quarter'' [Opportunity Type] = ''new customer'' [ASP]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Total Number of Opportunities
+          - ASP
+    - viz_type: HEADLINE
+      headline:
+        column_name: ASP
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: S1 Pipeline Created by Source
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Pipeline Created] [Opportunity Pipeline Date] [Opportunity Pipeline Date].''monthly'' [Opportunity Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Source] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Source
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Opportunity Pipeline Date,fiscal)
+          - Opportunity Source
+          - Total Pipeline Created
+  visualization_type: CHART
+- answer:
+    name: M1 Pipeline Created by Source
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M1 Pipeline Created] [M1 Pipeline Date] [M1 Pipeline Date].''monthly'' [M1 Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Source] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(M1 Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total M1 Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Source
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(M1 Pipeline Date,fiscal)
+          - Opportunity Source
+          - Total M1 Pipeline Created
+  visualization_type: CHART
+- answer:
+    name: Bookings Quarterly by Type
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Booked Amount] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''last 4 quarters'' ''this quarter'' [Opportunity Type] [Opportunity Type] != ''poc'' ''other'' ''professional services'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Booked Amount
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Opportunity Type
+          - Booked Amount
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Type
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: Total Open M1 Pipeline by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    formulas:
+    - name: M1 Open Pipeline Snapshot
+      expr: 'if( [Opportunity Snapshot M1 Stage Status]= ''pipeline'' ) then [Sales_Demo_1::Opportunity Snapshot Amount]else 0 '
+    - name: M1 Open Pipeline Snapshot Deals
+      expr: 'if( [Opportunity Snapshot M1 Stage Status]= ''pipeline'' ) then 1 else 0 '
+    - name: Opportunity Snapshot EOW Flag
+      expr: 'if(date( [Sales_Demo_1::Opportunity Snapshot Date]) = date(today()) ) then true else if (day_number_of_week( [Sales_Demo_1::Opportunity Snapshot Date]) = 7) then true else false '
+    - name: Opportunity Snapshot M1 Stage Status
+      expr: 'if( [Sales_Demo_1::Opportunity Snapshot Stage]= ''stage 6 booked'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''8'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s6'' ) then ''booked'' else if(substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''7'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''6'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''5'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s5'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''4'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s4'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''3'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s3'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''2'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s2'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 6 ,1) = ''1'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''s1'' or substr( [Sales_Demo_1::Opportunity Snapshot Stage], 0 ,2) = ''m1'' ) then ''pipeline'' else null '
+    query_text: '[M1 Open Pipeline Snapshot] [Opportunity Region] [Opportunity Snapshot EOW Flag] = true [Opportunity Type] != ''renewal'' [Opportunity Snapshot Date] [Opportunity Snapshot Date].''detailed'' [Opportunity Snapshot Date] = ''last 8 weeks'' ''this week'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total M1 Open Pipeline Snapshot
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Region
+          - Opportunity Snapshot Date
+          - Total M1 Open Pipeline Snapshot
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Snapshot Date
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: S1 Pipeline Created by Source %
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Pipeline Created] [Opportunity Pipeline Date] [Opportunity Pipeline Date].''monthly'' [Opportunity Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Source] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Opportunity Pipeline Date,fiscal)
+          - Opportunity Source
+          - Total Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Source
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: M1 Pipeline Created by Source %
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M1 Pipeline Created] [M1 Pipeline Date] [M1 Pipeline Date].''monthly'' [M1 Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Source] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total M1 Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Source
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(M1 Pipeline Date,fiscal)
+          - Opportunity Source
+          - Total M1 Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(M1 Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: S1 Pipeline Created Monthly by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Pipeline Created] [Opportunity Pipeline Date] [Opportunity Pipeline Date].''monthly'' [Opportunity Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Region] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Opportunity Pipeline Date,fiscal)
+          - Opportunity Region
+          - Total Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: M1 Pipeline Created Monthly by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M1 Pipeline Created] [M1 Pipeline Date] [M1 Pipeline Date].''monthly'' [M1 Pipeline Date] = ''last 6 months'' ''this month'' [Opportunity Region] [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(M1 Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(M1 Pipeline Date,fiscal)
+          - Opportunity Region
+          - Total M1 Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total M1 Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: Open M1s by Region and Age
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Stage Duration Bucket] [Opportunity Stage] = ''m1 new business meeting'' [Number of Opportunities] [Opportunity Region] sort by [Number of Opportunities] descending [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Stage Duration Bucket
+          - Opportunity Region
+          - Total Number of Opportunities
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Stage Duration Bucket
+        config:
+          aggr:
+          - COUNT_DISTINCT
+  visualization_type: CHART
+- answer:
+    name: Open M0s by Region and Age
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Opportunity Stage Duration Bucket] [Opportunity Stage] = ''m0 initial meeting set'' [Number of Opportunities] [Opportunity Region] sort by [Number of Opportunities] descending [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Stage Duration Bucket
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Opportunity Stage Duration Bucket
+          - Opportunity Region
+          - Total Number of Opportunities
+  visualization_type: CHART
+- answer:
+    name: M0 Created Monthly by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M0 Created] [Opportunity M0 Date First] [Opportunity M0 Date First].''monthly'' [Opportunity Region] [Opportunity M0 Date First] = ''last 12 months'' ''this month'' [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity M0 Date First,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: M0 Created
+        config:
+          aggr:
+          - SUM
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Opportunity M0 Date First,fiscal)
+          - Opportunity Region
+          - M0 Created
+  visualization_type: CHART
+- answer:
+    name: M1s Created Monthly by Region
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M1 Created] [Opportunity M1 Date First] [Opportunity M1 Date First].''monthly'' [Opportunity Region] [Opportunity M1 Date First] = ''last 12 months'' ''this month'' [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Opportunity M1 Date First,fiscal)
+          - Opportunity Region
+          - M1 Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Opportunity Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity M1 Date First,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: M1 Created
+        config:
+          aggr:
+          - SUM
+  visualization_type: CHART
+- answer:
+    name: Logos
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    formulas:
+    - name: Cumulative Number of Customers
+      expr: 'cumulative_sum(if(not(isnull( [Sales_Demo_1::Account Customer Date]))) then 1 else 0, [Sales_Demo_1::Account Customer Date]) '
+    query_text: '[Cumulative Number of Customers] [Account Customer Date]'
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(Account Customer Date,fiscal)
+          - Cumulative Number of Customers
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Account Customer Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Cumulative Number of Customers
+        config:
+          aggr:
+          - MIN
+  visualization_type: CHART
+- answer:
+    name: Expansion Booked Deals & ASP
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    formulas:
+    - name: ASP
+      expr: '[Sales_Demo_1::Booked Amount]/ count( [Sales_Demo_1::Opportunity ID]) '
+    query_text: '[Opportunity Stage Status] = ''booked'' [Number of Opportunities] [Opportunity Close Date].''quarterly'' [Opportunity Close Date] = ''last 8 quarters'' ''this quarter'' [Opportunity Type] = ''existing customer expansion'' [ASP]'
+    visualization:
+    - viz_type: HEADLINE
+      headline:
+        column_name: Quarter(Opportunity Close Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Number of Opportunities
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Quarter(Opportunity Close Date,fiscal)
+          - Total Number of Opportunities
+          - ASP
+    - viz_type: HEADLINE
+      headline:
+        column_name: ASP
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: S1 Pipeline Created Monthly by Account Tier
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Pipeline Created] [Account ABM Tier] [Opportunity Pipeline Date] [Opportunity Pipeline Date].''monthly'' [Opportunity Pipeline Date] = ''last 6 months'' ''this month'' [Account ABM Tier] != ''{null}'' [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Account ABM Tier
+          - Month(Opportunity Pipeline Date,fiscal)
+          - Total Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Account ABM Tier
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(Opportunity Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+  visualization_type: CHART
+- answer:
+    name: Customer Region Heat Map
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[Number of Customers] [Account Revenue Tier] [Account Region]'
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Account Revenue Tier
+          - Account Region
+          - Number of Customers
+    - viz_type: HEADLINE
+      headline:
+        column_name: Account Revenue Tier
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Account Region
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Number of Customers
+        config:
+          aggr:
+          - SUM
+  visualization_type: CHART
+- answer:
+    name: M1 Pipeline Created Monthly by Account Tier
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: '[M1 Pipeline Created] [Account ABM Tier] [M1 Pipeline Date] [M1 Pipeline Date].''monthly'' [M1 Pipeline Date] = ''last 6 months'' ''this month'' [Account ABM Tier] != ''{null}'' [Opportunity Type] != ''renewal'''
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Account ABM Tier
+          - Month(M1 Pipeline Date,fiscal)
+          - Total M1 Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Total M1 Pipeline Created
+        config:
+          aggr:
+          - TABLE_AGGR
+    - viz_type: HEADLINE
+      headline:
+        column_name: Account ABM Tier
+        config:
+          aggr:
+          - COUNT_DISTINCT
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(M1 Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+  visualization_type: CHART
+- answer:
+    name: M1 Pipeline Creation Growth Monthly YoY
+    tables:
+    - name: Sales_Demo
+    table_paths:
+    - id: Sales_Demo_1
+      table: Sales_Demo
+      join_path:
+      - {}
+    query_text: growth of [M1 Pipeline Created] by [M1 Pipeline Date] [M1 Pipeline Date].'monthly' year-over-year [Opportunity Type] != 'renewal' [M1 Pipeline Date] = 'last 24 months' 'this month'
+    visualization:
+    - viz_type: TABLE
+      table:
+        config:
+          column_ordering:
+          - Month(M1 Pipeline Date,fiscal)
+          - Growth of M1 Pipeline Created
+    - viz_type: HEADLINE
+      headline:
+        column_name: Month(M1 Pipeline Date,fiscal)
+        config:
+          aggr:
+          - MIN
+          - MAX
+    - viz_type: HEADLINE
+      headline:
+        column_name: Growth of M1 Pipeline Created
+        config:
+          aggr:
+          - MIN
+  visualization_type: CHART
