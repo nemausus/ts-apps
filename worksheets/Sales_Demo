@@ -1,0 +1,558 @@
+name: "Sales_Demo"
+tables {
+  name: "Accounts"
+}
+tables {
+  name: "Opportunity"
+}
+tables {
+  name: "Opportunity Snapshot"
+}
+joins {
+  name: "Opportunity to Account"
+  source: "Opportunity"
+  destination: "Accounts"
+  type: "INNER"
+  is_one_to_one: false
+}
+joins {
+  name: "Opportunity Id - Opportunity Id"
+  source: "Opportunity Snapshot"
+  destination: "Opportunity"
+  type: "INNER"
+  is_one_to_one: false
+}
+table_paths {
+  id: "Accounts_1"
+  table: "Accounts"
+  join_path {
+    join: "Opportunity Id - Opportunity Id"
+    join: "Opportunity to Account"
+  }
+}
+table_paths {
+  id: "Opportunity_1"
+  table: "Opportunity"
+  join_path {
+    join: "Opportunity Id - Opportunity Id"
+  }
+}
+table_paths {
+  id: "Opportunity Snapshot_1"
+  table: "Opportunity Snapshot"
+  join_path {
+  }
+}
+formulas {
+  name: "Booked Amount"
+  expr: "sum(if([Opportunity_1::Opportunity Stage Status] = \'booked\' ) then [Opportunity_1::Opportunity Amount] else 0) "
+}
+formulas {
+  name: "Booked Deals"
+  expr: "if([Opportunity_1::Opportunity Stage Status] = \'booked\' ) then 1 else 0 "
+}
+formulas {
+  name: "DEMO Account Name"
+  expr: "if([Accounts_1::Account Name] = \'verizon wireless\' ) then \'acme corp\' else if([Accounts_1::Account Name] = \'data recognition corp (drc)\' ) then \'stark industries\' else null "
+}
+formulas {
+  name: "M0 Created"
+  expr: "sum(if (not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0) "
+}
+formulas {
+  name: "M0 to M1 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0)>0) then 100*sum (if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0)/sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "M0 to MH %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0)>0) then (sum (if(not(isnull([Opportunity_1::Opportunity Meeting Date] ))) then 1 else 0)*100)/sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "M0 to S1 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0)>0) then 100*sum (if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0)/sum(if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "M1 Created"
+  expr: "sum(if (not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0) "
+}
+formulas {
+  name: "M1 Open Pipeline"
+  expr: "sum(if([Opportunity_1::Opportunity Stage Status] = \'pipeline\' or substr([Opportunity_1::Opportunity Stage],0,2)= \'m1\' ) then [Opportunity_1::Opportunity Amount] else null ) "
+}
+formulas {
+  name: "M1 Pipeline Created"
+  expr: "if(not(isnull([Opportunity_1::Opportunity M1 Date First] )) or not(isnull([Opportunity_1::Opportunity Pipeline Date]))) then [Opportunity_1::Opportunity Amount] else 0 "
+}
+formulas {
+  name: "M1 Pipeline Date"
+  expr: "if(not(isnull([Opportunity_1::Opportunity Pipeline Date] ))) then [Opportunity_1::Opportunity Pipeline Date] else if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then [Opportunity_1::Opportunity M1 Date First] else null "
+}
+formulas {
+  name: "M1 to S1 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0)>0) then sum (if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0)*100/sum(if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "M1 to S6 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0)>0) then sum(if(not(isnull([Opportunity_1::Opportunity S6 Date First] ))) then 1 else 0)*100/sum(if(not(isnull([Opportunity_1::Opportunity M1 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "Number of Accounts"
+  expr: "if(not(isnull([Opportunity_1::Account ID] ))) then 1 else 0 "
+}
+formulas {
+  name: "Number of Customers"
+  expr: "sum(if(not(isnull([Accounts_1::Account Customer Date]))) then 1 else 0) "
+}
+formulas {
+  name: "Number of Opportunities"
+  expr: "if(not(isnull([Opportunity_1::Opportunity ID] ))) then 1 else 0 "
+}
+formulas {
+  name: "Open Pipeline"
+  expr: "sum(if([Opportunity_1::Opportunity Stage Status] = \'pipeline\' ) then [Opportunity_1::Opportunity Amount] else null ) "
+}
+formulas {
+  name: "Open Pipeline Deals"
+  expr: "if(not(isnull([Opportunity_1::Opportunity ID] )) and [Opportunity_1::Opportunity Stage Status] = \'pipeline\' ) then 1 else 0"
+}
+formulas {
+  name: "Opportunity Expected ACV"
+  expr: "[Opportunity_1::Opportunity Probability] * [Opportunity_1::Opportunity ACV] "
+}
+formulas {
+  name: "Opportunity Expected Amount"
+  expr: "[Opportunity_1::Opportunity Probability] * [Opportunity_1::Opportunity Amount] "
+}
+formulas {
+  name: "Opportunity M0 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity M1 Date First])) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days ([Opportunity_1::Opportunity M1 Date First] ,[Opportunity_1::Opportunity M0 Date First] ) else if(not(isnull([Opportunity_1::Opportunity S1 Date First] )) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days([Opportunity_1::Opportunity S1 Date First],[Opportunity_1::Opportunity M0 Date First]) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date])) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity M0 Date First]) else if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then diff_days(today(),[Opportunity_1::Opportunity M0 Date First]) else null "
+}
+formulas {
+  name: "Opportunity M1 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity M1 Date First])) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days ([Opportunity_1::Opportunity M1 Date First] ,[Opportunity_1::Opportunity M0 Date First] ) else if(not(isnull([Opportunity_1::Opportunity S1 Date First] )) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days([Opportunity_1::Opportunity S1 Date First],[Opportunity_1::Opportunity M0 Date First]) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date])) and not(isnull([Opportunity_1::Opportunity M0 Date First]))) then diff_days([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity M0 Date First]) else if(not(isnull([Opportunity_1::Opportunity M0 Date First] ))) then diff_days(today(),[Opportunity_1::Opportunity M0 Date First]) else null "
+}
+formulas {
+  name: "Opportunity Pipeline Duration"
+  expr: "[Opportunity S5 Duration] + [Opportunity S4 Duration] + [Opportunity S3 Duration] + [Opportunity S2 Duration] + [Opportunity S1 Duration] "
+}
+formulas {
+  name: "Opportunity S1 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity S2 Date First])) and not(isnull([Opportunity_1::Opportunity S1 Date First]))) then diff_days ([Opportunity_1::Opportunity S2 Date First] ,[Opportunity_1::Opportunity S1 Date First] ) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date] )) and not(isnull([Opportunity_1::Opportunity S1 Date First]))) then diff_days ([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity S1 Date First]) else if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then diff_days (today(),[Opportunity_1::Opportunity S1 Date First]) else null "
+}
+formulas {
+  name: "Opportunity S2 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity S3 Date First])) and not(isnull([Opportunity_1::Opportunity S2 Date First]))) then diff_days ([Opportunity_1::Opportunity S3 Date First] ,[Opportunity_1::Opportunity S2 Date First] ) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date] )) and not(isnull([Opportunity_1::Opportunity S2 Date First]))) then diff_days ([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity S2 Date First]) else if(not(isnull([Opportunity_1::Opportunity S2 Date First] ))) then diff_days (today(),[Opportunity_1::Opportunity S2 Date First]) else null "
+}
+formulas {
+  name: "Opportunity S3 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity S4 Date First])) and not(isnull([Opportunity_1::Opportunity S3 Date First]))) then diff_days ([Opportunity_1::Opportunity S4 Date First] ,[Opportunity_1::Opportunity S3 Date First] ) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date] )) and not(isnull([Opportunity_1::Opportunity S3 Date First]))) then diff_days ([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity S3 Date First]) else if(not(isnull([Opportunity_1::Opportunity S3 Date First] ))) then diff_days (today(),[Opportunity_1::Opportunity S3 Date First]) else null "
+}
+formulas {
+  name: "Opportunity S4 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity S5 Date First])) and not(isnull([Opportunity_1::Opportunity S4 Date First]))) then diff_days ([Opportunity_1::Opportunity S5 Date First] ,[Opportunity_1::Opportunity S4 Date First] ) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date] )) and not(isnull([Opportunity_1::Opportunity S4 Date First]))) then diff_days ([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity S4 Date First]) else if(not(isnull([Opportunity_1::Opportunity S4 Date First] ))) then diff_days (today(),[Opportunity_1::Opportunity S4 Date First]) else null "
+}
+formulas {
+  name: "Opportunity S5 Duration"
+  expr: "if(not(isnull([Opportunity_1::Opportunity S6 Date First])) and not(isnull([Opportunity_1::Opportunity S5 Date First]))) then diff_days ([Opportunity_1::Opportunity S6 Date First] ,[Opportunity_1::Opportunity S5 Date First] ) else if(not(isnull([Opportunity_1::Opportunity Disqualified Date] )) and not(isnull([Opportunity_1::Opportunity S6 Date First]))) then diff_days ([Opportunity_1::Opportunity Disqualified Date],[Opportunity_1::Opportunity S5 Date First]) else if(not(isnull([Opportunity_1::Opportunity S5 Date First] ))) then diff_days (today(),[Opportunity_1::Opportunity S5 Date First]) else null "
+}
+formulas {
+  name: "Opportunity SDR Influence"
+  expr: "if(not(isnull([Opportunity_1::Opportunity SDR ID]))) then \'sdr influenced\' else \'not sdr influenced\' "
+}
+formulas {
+  name: "Opportunity Stage Duration Bucket"
+  expr: "if([Opportunity_1::Opportunity Stage Duration] <= 14) then \'1) 0-14 days\' else if([Opportunity_1::Opportunity Stage Duration] <= 30) then \'2) 15-30 days\' else \'3) 30+ days\' "
+}
+formulas {
+  name: "Pipeline Created"
+  expr: "if(not(isnull([Opportunity_1::Opportunity Pipeline Date]))) then [Opportunity_1::Opportunity Amount] else null "
+}
+formulas {
+  name: "S1 Created"
+  expr: "sum(if(not(isnull([Accounts_1::Account Customer Date]))) then 1 else 0) "
+}
+formulas {
+  name: "S1 to S3 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0)>0) then sum (if(not(isnull([Opportunity_1::Opportunity S3 Date First] ))) then 1 else 0)*100/sum(if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0) else 0 "
+}
+formulas {
+  name: "S1 to S6 %"
+  expr: "if(sum(if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0)>0) then sum(if(not(isnull([Opportunity_1::Opportunity S6 Date First] ))) then 1 else 0)*100/sum(if(not(isnull([Opportunity_1::Opportunity S1 Date First] ))) then 1 else 0) else 0 "
+}
+filter {
+}
+worksheet_columns {
+  name: "Account Country"
+  column_id: "Accounts_1::Account Country"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Account Industry"
+  column_id: "Accounts_1::Account Industry"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Account Region"
+  column_id: "Accounts_1::Account Region"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Account Revenue Tier"
+  column_id: "Accounts_1::Account Revenue Tier"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Account Customer Date"
+  column_id: "Accounts_1::Account Customer Date"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Account ABM Tier"
+  column_id: "Accounts_1::Account ABM Tier"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Amount"
+  column_id: "Opportunity_1::Opportunity Amount"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Close Date"
+  column_id: "Opportunity_1::Opportunity Close Date"
+  properties {
+    column_type: "ATTRIBUTE"
+    calendar: "fiscal"
+  }
+}
+worksheet_columns {
+  name: "Opportunity CS ID"
+  column_id: "Opportunity_1::Opportunity CS ID"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity ID"
+  column_id: "Opportunity_1::Opportunity ID"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Name"
+  column_id: "Opportunity_1::Opportunity Name"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Owner ID"
+  column_id: "Opportunity_1::Opportunity Owner ID"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Pipeline Date"
+  column_id: "Opportunity_1::Opportunity Pipeline Date"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Region"
+  column_id: "Opportunity_1::Opportunity Region"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Source"
+  column_id: "Opportunity_1::Opportunity Source"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Stage"
+  column_id: "Opportunity_1::Opportunity Stage"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Type"
+  column_id: "Opportunity_1::Opportunity Type"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Stage Status"
+  column_id: "Opportunity_1::Opportunity Stage Status"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Forecast Category"
+  column_id: "Opportunity_1::Opportunity Forecast Category"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Probability"
+  column_id: "Opportunity_1::Opportunity Probability"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Meeting Date"
+  column_id: "Opportunity_1::Opportunity Meeting Date"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Deployment"
+  column_id: "Opportunity_1::Opportunity Deployment"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Source Contact ID"
+  column_id: "Opportunity_1::Opportunity Source Contact ID"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity M0 Date First"
+  column_id: "Opportunity_1::Opportunity M0 Date First"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity M1 Date First"
+  column_id: "Opportunity_1::Opportunity M1 Date First"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Owner Last Touch Date"
+  column_id: "Opportunity_1::Opportunity Owner Last Touch Date"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Product Type"
+  column_id: "Opportunity_1::Opportunity Product Type"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Database Used"
+  column_id: "Opportunity_1::Opportunity Database Used"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Net Bookings"
+  column_id: "Opportunity_1::Opportunity Net Bookings"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Opportunity ACV"
+  column_id: "Opportunity_1::Opportunity ACV"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Opportunity ACV Incremental Upside"
+  column_id: "Opportunity_1::Opportunity ACV Incremental Upside"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Snapshot Amount"
+  description: "Total amount linked to the opportunity including"
+  column_id: "Opportunity Snapshot_1::Opportunity Snapshot Amount"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Snapshot Close Date"
+  description: "Date when opportunity is going to close"
+  column_id: "Opportunity Snapshot_1::Opportunity Snapshot Close Date"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Snapshot Forecast Category"
+  description: "Forecast category for opportunity (Example: Commit)"
+  column_id: "Opportunity Snapshot_1::Opportunity Snapshot Forecast Category"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Snapshot Opportunity ID"
+  description: "Salesforce ID for the object (18 digit ID)"
+  column_id: "Opportunity Snapshot_1::Opportunity ID"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Snapshot Date"
+  description: "Date when snapshot was taken"
+  column_id: "Opportunity Snapshot_1::Opportunity Snapshot Date"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Snapshot Stage"
+  description: "Current stage of the opportunity "
+  column_id: "Opportunity Snapshot_1::Opportunity Snapshot Stage"
+  properties {
+    column_type: "ATTRIBUTE"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Number of Opportunities"
+  formula_id: "Number of Opportunities"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Open Pipeline"
+  formula_id: "Open Pipeline"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Open Pipeline Deals"
+  formula_id: "Open Pipeline Deals"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Pipeline Created"
+  formula_id: "Pipeline Created"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "Booked Amount"
+  formula_id: "Booked Amount"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "M0 Created"
+  formula_id: "M0 Created"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "M1 Pipeline Created"
+  formula_id: "M1 Pipeline Created"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+  }
+}
+worksheet_columns {
+  name: "M1 Pipeline Date"
+  formula_id: "M1 Pipeline Date"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "Opportunity Stage Duration Bucket"
+  formula_id: "Opportunity Stage Duration Bucket"
+  properties {
+    column_type: "ATTRIBUTE"
+  }
+}
+worksheet_columns {
+  name: "M1 Created"
+  formula_id: "M1 Created"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+worksheet_columns {
+  name: "Number of Customers"
+  formula_id: "Number of Customers"
+  properties {
+    column_type: "MEASURE"
+    aggregation: "SUM"
+    index_type: "DONT_INDEX"
+  }
+}
+properties {
+  is_bypass_rls: false
+  join_progressive: true
+}

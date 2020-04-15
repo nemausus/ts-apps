@@ -1,0 +1,11 @@
+object_onboarding_config {
+  object_id: "PIPELINE X"
+  metadata_type: "PINBOARD_ANSWER_BOOK"
+  onboarding_step {
+    action_type: EXPLORE
+    explore {
+      visualization_id: "M1 Open Pipeline Quarterly"
+      context_text: "{\"tooltipPosition\":\"bottom-right\",\"tooltipText\":\"This chart shows you the open pipeline broken down quarterly\"}"
+    }
+  }
+}
